@@ -339,6 +339,47 @@ Use this path when you want hot-reload for active development or contribution.
 
 **Requirements:** Python 3.11–3.12 · Node.js 18.13–22.x
 
+#### macOS setup with MacPorts
+
+Install the supported Python and Node.js versions:
+
+```bash
+sudo port install python312 nodejs22 npm10
+```
+
+From the repository root, create a virtual environment and install the backend
+dependencies. On Intel Macs, install the prebuilt `sentencepiece` wheel first to
+avoid building it from source:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install "sentencepiece==0.2.0"
+python -m pip install -r requirements.txt
+cp .env.example .env
+```
+
+Start the backend from the repository root:
+
+```bash
+source .venv/bin/activate
+uvicorn main:app --reload --host 127.0.0.1 --port 8080
+```
+
+The API is at **http://localhost:8080** and its interactive docs are at
+**http://localhost:8080/docs**. Stop the backend with `Ctrl+C`.
+
+In a second terminal, install and start the frontend:
+
+```bash
+cd ui
+npm ci
+npm run dev -- --host 127.0.0.1
+```
+
+Open **http://localhost:5173**. Stop the frontend with `Ctrl+C`. Chat
+responses require a configured AI provider or a local Ollama installation.
+
 1. **Fork and Clone the Repository**
    - Go to [GitHub Repository](https://github.com/Open-TutorAi/open-tutor-ai-CE)
    - Click on **Fork**, then clone your forked repo:
